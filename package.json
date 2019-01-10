@@ -1,0 +1,26 @@
+{
+  "name": "dice-statistics",
+  "version": "0.0.1",
+  "description": "Visualize dice rolls probabilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "keywords": [],
+  "author": "Michele Lambertucci",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.2.1"
+  },
+  "dependencies": {
+    "chart.js": "^2.7.3"
+  }
+}
