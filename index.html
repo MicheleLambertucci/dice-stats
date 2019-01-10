@@ -9,6 +9,12 @@
             <h1>Dice stats</h1>
             <input type="text" id="expression" onchange="dice.updateDistribution()">
             <canvas id="distributionChart"></canvas>
+            <div class="info">
+                <ul>
+                    <li>Mean: <span id="mean"></span></li>
+                    <li>Standard Deviation: <span id="stddev"></span></li>
+                </ul>
+            </div>
         </div>
     </body>
 </html>

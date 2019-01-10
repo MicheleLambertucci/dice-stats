@@ -13,8 +13,8 @@ class Die{
 
     get distribution(){
         var entries = Array.from({length: this.m}, (value, index) => [this.multiplier*(index+1), 1]);
-        const start = new Map(entries);
-        var result = new Map(entries);
+        const start = new Distribution(entries);
+        var result = new Distribution(entries);
 
         for(var i = 1; i < this.n; i++){
             result = cross(result, start);
@@ -32,8 +32,39 @@ class Die{
     }
 }
 
+export class Distribution extends Map {
+    get totalCombinations(){
+        return Array.from(this.values()).reduce((total, value) => total + value);
+    }
+
+    get labels(){
+        return Array.from(this.keys());
+    }
+
+    get probabilities(){
+        return Array.from(this.values(), (val, _) => val / this.totalCombinations);
+    }
+
+    probability(key){
+        return this.get(key) / this.totalCombinations;
+    }
+
+    get mean(){
+        return Array.from(this.keys(), (key, _) => 
+                this.probability(key) * key
+            ).reduce((total, value) => total + value);
+    }
+
+    get standardDeviation(){
+        var variance = Array.from(this.keys(), (val, _) => this.probability(val) * Math.pow(val - this.mean, 2))
+            .reduce((total, val) => total + val);
+        console.log(variance)
+        return Math.sqrt(variance);
+    }
+}
+
 function cross(a, b){
-    var result = new Map();
+    var result = new Distribution();
     for(const first of a.entries()){
         for(const second of b.entries()){
             var sum = first[0] + second[0];
@@ -50,7 +81,7 @@ function cross(a, b){
  */
 function distributionFromArray(dicelist){
     if(dicelist.length === 0) return null;
-    var result = new Map();
+    var result = new Distribution();
     result = dicelist[0].distribution;
 
     for(var i = 1; i < dicelist.length; i++){

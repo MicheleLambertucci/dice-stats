@@ -1,7 +1,5 @@
-import { parseAndGetDistribution, parse } from './dice'
+import { parseAndGetDistribution, Distribution } from './dice'
 import { Chart } from 'chart.js'
-
-export const parser = parse;
 
 export function updateDistribution(){
     console.log("Called ghei")
@@ -11,21 +9,27 @@ export function updateDistribution(){
         distributionChart = createChart()
     }
     updateChart(distributionChart, distribution);
+    updateInfo(distribution);
 }
 
 /**
  * Update a chart.js chart with new distribution
  * @param {Chart} chart 
- * @param {Map<Number, Number>} distribution 
+ * @param {Distribution} distribution 
  */
 function updateChart(chart, distribution){
-    chart.data.labels = Array.from(distribution.keys());
-    var total = Array.from(distribution.values()).reduce(
-        (total, value) => total + value
-    )
-    chart.data.datasets[0].data = Array.from(distribution.values(), 
-        (value, position) => value / total);
+    chart.data.labels = distribution.labels;
+    chart.data.datasets[0].data = distribution.probabilities;
     chart.update();
+}
+
+/**
+ * 
+ * @param {Distribution} distribution 
+ */
+function updateInfo(distribution){
+    document.getElementById('mean').innerText = distribution.mean.toFixed(2);
+    document.getElementById('stddev').innerText = distribution.standardDeviation.toFixed(2);
 }
 
 export let distributionChart;
@@ -38,10 +42,10 @@ export function createChart(){
     var chart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [],
+            labels: [1, 2, 3, 4, 5, 6],
             datasets: [{
                 label: 'Probability',
-                data: []
+                data: [0, 0, 0, 0, 0, 0]
             }]
         }
     })
