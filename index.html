@@ -8,12 +8,18 @@
         <div class="container">
             <h1>Dice stats</h1>
             <input type="text" id="expression" onchange="dice.updateDistribution()">
-            <canvas id="distributionChart"></canvas>
-            <div class="info">
-                <ul>
-                    <li>Mean: <span id="mean"></span></li>
-                    <li>Standard Deviation: <span id="stddev"></span></li>
-                </ul>
+            <div class="row">
+                <div class="col-md-8">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+                <div class="col-md">
+                    <div class="info">
+                        <ul>
+                            <li>Mean: <span id="mean"></span></li>
+                            <li>Standard Deviation: <span id="stddev"></span></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
