@@ -19,6 +19,19 @@ export function createChart(canvasId){
             }]
         },
         options: {
+            onHover: function(e, elements){
+                var colors = 'rgba(0, 0, 0, 0.3)'
+                if(elements.length > 0){
+                    var index = elements[0]._index;
+                    colors = Array.from(elements[0]._chart.config.data.labels, 
+                        (_, i) => {
+                            if(i <= index) return 'rgba(178, 34, 34, 0.5)'
+                            else return 'rgba(0, 0, 0, 0.3'
+                        });
+                    }
+                chart.data.datasets[0].backgroundColor = colors;
+                chart.update()
+            },
             legend: {
                 display: false
             },
@@ -44,7 +57,13 @@ export function createChart(canvasId){
                 displayColors: false,
                 callbacks: {
                     label: function(tooltipItem, data){
-                        return String((Number(tooltipItem.yLabel)*100).toFixed(2))+'%'
+                        var partialSum = data.datasets[0].data.slice(0, tooltipItem.index+1).reduce(
+                            (total, value) => total+value
+                        )
+                        return String((partialSum*100).toFixed(2))+'%'
+                    },
+                    title: function(tooltipItem, data){
+                        return '1 - ' + String(tooltipItem[0].index+1)
                     }
                 }
             }
