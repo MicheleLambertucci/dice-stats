@@ -12,18 +12,41 @@ export function createChart(canvasId){
         data: {
             labels: [1, 2, 3, 4, 5, 6],
             datasets: [{
-                label: 'Probability',
-                data: [0, 0, 0, 0, 0, 0]
+                label: 'Distribution',
+                data: [0, 0, 0, 0, 0, 0],
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                hoverBackgroundColor: 'rgba(178, 34, 34, 0.5)'
             }]
         },
         options: {
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    top: 10
+                }
+            },
             scales: {
                 yAxes: [{
                     display: true,
                     ticks: {
                         suggestedMin: 0
+                    },
+                    offset: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Probability'
                     }
                 }]
+            },
+            tooltips: {
+                displayColors: false,
+                callbacks: {
+                    label: function(tooltipItem, data){
+                        return String((Number(tooltipItem.yLabel)*100).toFixed(2))+'%'
+                    }
+                }
             }
         }
     })
